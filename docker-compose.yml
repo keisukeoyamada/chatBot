@@ -1,0 +1,10 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "49500:5000"  # コンテナ内の 5000 番をホストの 49500 番にマッピング
+    environment:
+      - FLASK_ENV=development
+    volumes:
+      - .:/app

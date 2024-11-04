@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+<link rel="stylesheet" href="styles.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        h1 {
+        font-size: 2em; /* デフォルトのフォントサイズ */
+        margin: 0; /* 上下のマージンを削除 */
+        padding: 1em 0; /* 上下に余白を追加 */
+        background-color: #f0f0f0; /* 背景色 */
+        text-align: center; /* テキストを中央揃え */
+        display: inline-block; /* インラインブロックにする */
+        width: 100%; /* 画面幅いっぱいに広げる */
+        }
+        .container {
+        display: flex;
+        flex-direction: column; /* 子要素を縦方向に並べる */
+        /* align-items: center; 子要素を中央揃えにする */
+        gap: 10px; /* 子要素間のスペースを追加 */
+        width: 100%; /* 親要素を画面幅いっぱいに */
+        padding: 40 40px; /* 左右に少し余白を追加 */
+        }   
+        #user-input, #send-button {
+        width: 100%; /* 画面幅いっぱいに広げる */
+        max-width: 100%; /* 最大幅を制限 */
+        font-size: 16px;
+        box-sizing: border-box; /* パディングを含めたサイズに設定 */
+        }
+        #user-input {
+            /* width: 300px; */
+            height: 100px;
+            font-size: 16px;
+            box-sizing: border-box; /* パディングとボーダーを含めたサイズに設定 */
+            overflow-y: hidden; /*スクロールバーが表示されないようにする */
+            resize: none; /*手動でのサイズ変更を禁止 */
+        } 
+        #user-input::placeholder {
+            text-align: left; /* テキストを左寄せにする */
+            /* color: #888; プレースホルダーの色を設定 (オプション) */
+        }
+         #send-button {
+            /* width: 300px; */
+            height: 40px;
+            font-size: 16px;
+            cursor: pointer; /* ボタンの上にカーソルを置いたときにポインタを表示 */
+        }
+        
+        #loading-icon {
+            display: none;
+            border: 8px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 8px solid #3498db;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #response {
+            width: 100%; /* 画面幅いっぱいに広げる */
+            max-width: 100%; /* 最大幅を制限 */
+            font-size: 16px; /* テキストのフォントサイズを設定 */
+            box-sizing: border-box; /* パディングを含めたサイズに設定 */
+            padding: 10px; /* 内部の余白を追加 */
+            /* background-color: #ffffff; 背景色を白に設定 */
+            /* border: 1px solid #ccc; ボーダーを追加して少し視覚的に区別 */
+            margin-top: 10px; /* 上部に余白を追加 */
+        }
+        #smallfont {
+            font-size: 15px; /* フォントサイズを小さく設定 */
+            opacity: 0.5; /* 文字を薄く表示 */
+        }
+    </style>
+    <title>GeminiAI Chatbot</title>
+</head>
+<body>
+    <h1>Chatbot <span id= "smallfont">powered by GeminiAI</span> </h1>
+    <div><a href="index.html">keisuke</a>が練習用に作成したアプリケーションです</div>
+    <!-- <input type="text" id="user-input" placeholder="要件を入力してください"> -->
+    <div class="container">
+        <textarea id="user-input" placeholder="
+        こんにちは！私はGeminiのチャットボットです。
+        喜んでお手伝いします。
+        どんなご用件でしょうか？" 
+        oninput="adjustHeight(this)"></textarea>
+        <button type="text" id="send-button" onclick="sendMessage()">送信</button>
+    </div>
+    <div id="loading-icon"></div>
+    <div id="response"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        function sendMessage() {
+            const input = document.getElementById('user-input').value;
+            const loadingIcon = document.getElementById('loading-icon'); // ここで変数を定義
+            // console.log(loadingIcon);　コンソールで確認
+            loadingIcon.style.display = 'block'; // アイコンを表示
+
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ input: input })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // document.getElementById('response').innerText = data.response;
+                document.getElementById('response').innerHTML = marked.parse(data.response);
+            })
+            .catch(error => console.error('Error:', error))
+            .finally(() => {
+            loadingIcon.style.display = 'none';
+            })
+        }
+        function adjustHeight(element) {
+            element.style.height = 'auto';  // 一旦高さをリセット
+            element.style.height = (element.scrollHeight) + 'px';  // 内容に応じて高さを設定
+        }
+    </script>
+    <footer>
+        <p>&copy; 2024 Kei.O. All rights reserved.</p>
+    </footer>
+</body>
+</html>
