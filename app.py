@@ -11,7 +11,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('bot.html')
+    conversations = load_conversation_log()
+    return render_template('bot.html', conversations=conversations)
 
 load_dotenv()
 
@@ -47,6 +48,16 @@ def save_conversation_log(user_input, response, filename="conversation_log.json"
         print(f"ファイルの書き込み中にエラーが発生しました: {e}")
 # if __name__ == '__main__':
 #     app.run(debug=True)
+
+def load_conversation_log(filename="conversation_log.json"):
+    # 会話ログを読み込む
+    conversations = []
+    try:
+        with open(filename, "r", encoding='utf-8') as file:
+            conversations = [json.loads(line) for line in file]
+    except (IOError, json.JSONDecodeError) as e:
+        print(f"会話ログの読み込み中にエラーが発生しました: {e}")
+    return conversations
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

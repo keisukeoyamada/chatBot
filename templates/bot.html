@@ -90,7 +90,14 @@
         <button type="text" id="send-button" onclick="sendMessage()">送信</button>
     </div>
     <div id="loading-icon"></div>
-    <div id="response"></div>
+    <div id="response">
+        <h2>会話ログ</h2>
+        {% for conversation in conversations %}
+            <div><strong>ユーザー:</strong> {{ conversation.user_input }}</div>
+            <div><strong>ボット:</strong> {{ conversation.bot_response }}</div>
+            <hr>
+        {% endfor %}
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
