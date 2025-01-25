@@ -1,7 +1,10 @@
 # ベースイメージとしてPythonを指定
 FROM python:3.11-slim
+
+RUN apt-get update
+
 # curlをインストール
-RUN apt-get update && apt-get install -y curl
+RUN apt-get update && apt-get install -y curl git
 # 作業ディレクトリを作成
 WORKDIR /app
 

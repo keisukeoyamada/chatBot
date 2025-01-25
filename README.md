@@ -13,3 +13,8 @@ docker run -d -p 49500:5000 chatbot
 
 # アクセス先
 http://localhost:49500/
+
+
+# DevContainerの利用
+VS CodeでDev Containerをインストール
+.devcontainerファイルの設定があるのでコンテナビルドする
