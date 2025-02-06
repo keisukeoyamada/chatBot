@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 # from pathlib import Path
 
 app = Flask(__name__)
-
+CONVERSATION_LOG_FILE = "conversation_log.json"
 @app.route('/')
 def index():
     conversations = load_conversation_log()
@@ -34,7 +34,7 @@ def chat():
     return jsonify({"response":response.text})
     
 
-def save_conversation_log(user_input, response, filename="conversation_log.json"):
+def save_conversation_log(user_input, response, filename=CONVERSATION_LOG_FILE):
     # 会話内容をJSON形式で保存
     conversation = {
         "user_input": user_input,
@@ -49,7 +49,7 @@ def save_conversation_log(user_input, response, filename="conversation_log.json"
 # if __name__ == '__main__':
 #     app.run(debug=True)
 
-def load_conversation_log(filename="conversation_log.json"):
+def load_conversation_log(filename=CONVERSATION_LOG_FILE):
     # 会話ログを読み込む
     conversations = []
     try:
