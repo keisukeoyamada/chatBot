@@ -1,0 +1,181 @@
+{
+    "editor.formatOnSave": true,
+    "editor.stickyScroll.enabled": false,
+    "notebook.stickyScroll.enabled": false,
+    "terminal.integrated.stickyScroll.enabled": false,
+    "workbench.tree.enableStickyScroll": false,
+    "[python]": {
+      "editor.insertSpaces": true,
+      "editor.detectIndentation": true,
+      "editor.tabSize": 4,
+      "editor.codeActionsOnSave": {
+        "python.runLinting": "explicit",
+        "source.organizeImports": "explicit"
+      },
+      "editor.formatOnSave": true,
+      "editor.formatOnType": false,
+      "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "isort.args": [
+      "--line-length",
+      "200",
+      "--profile",
+      "black"
+    ],
+    "editor.renderWhitespace": "boundary",
+    "markdown.preview.scrollPreviewWithEditor": false,
+    "markdown.preview.scrollEditorWithPreview": false,
+    "[yaml]": {
+      "editor.insertSpaces": true,
+      "editor.detectIndentation": true,
+      "editor.tabSize": 2,
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "black-formatter.args": [
+      "--line-length",
+      "200"
+    ],
+    "explorer.compactFolders": false,
+    "editor.rulers": [
+      79,
+      100,
+      150,
+      200
+    ],
+    "editor.guides.bracketPairs": true,
+    "editor.bracketPairColorization.enabled": true,
+    "[json]": {
+      "editor.defaultFormatter": "vscode.json-language-features",
+      "editor.tabSize": 2
+    },
+    "json.format.enable": true,
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 5000,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "python.envFile": "${workspaceFolder}/.venv",
+    // "python.venvPath": "${workspaceFolder}/.venv",
+    // python linting
+    "pylint.args": [
+      "--extension-pkg-whitelist=numpy, pandas",
+      "--ignored-modules=tensorflow.keras",
+      "--jobs=7",
+      "--generated-members=pandas.*, numpy.*",
+      "--ignore=E1136"
+    ],
+    "pylint.importStrategy": "fromEnvironment",
+    "pylint.cwd": "${workspaceFolder}",
+    "pylint.path": [
+      "python",
+      "-m",
+      "pylint"
+    ],
+    "pylint.severity": {
+      "convention": "Information",
+      "error": "Error",
+      "fatal": "Error",
+      "refactor": "Information",
+      "warning": "Warning",
+      "info": "Information"
+    },
+    // "python.analysis.typeCheckingMode": "off",
+    // "python.linting.enabled": true,
+    // "python.linting.pylintEnabled": true,
+    // "python.linting.pylintPath": "pylint",
+    // "python.linting.pylintArgs": [
+    //   "--extension-pkg-whitelist=numpy, pandas",
+    //   "--ignored-modules=tensorflow.keras",
+    //   "--jobs=7",
+    //   "--generated-members=pandas.*, numpy.*",
+    //   "--ignore=E1136"
+    // ],
+    // "python.linting.pylintCategorySeverity.refactor": "Information",
+    "mypy-type-checker.args": [
+      // "--ignore-missing-imports",
+      // "--follow-imports=silent",
+      // "--show-column-numbers",
+      // "--check-untyped-defs"
+      // "--check-untyped-defs",
+      // "--strict",
+      // "--disallow-any-unimported",
+      // "--disallow-any-expr",
+      // "--disallow-any-decorated",
+      // "--disallow-any-explicit",
+      // "--warn-unreachable",
+      // "--warn-incomplete-stub",
+    ],
+    "mypy-type-checker.severity": {
+      "error": "Error",
+      "note": "Information"
+    },
+    "mypy-type-checker.importStrategy": "fromEnvironment",
+    // "python.linting.mypyEnabled": true,
+    // "python.linting.mypyArgs": [
+    //   // "--ignore-missing-imports",
+    //   // "--follow-imports=silent",
+    //   // "--show-column-numbers",
+    //   // "--check-untyped-defs"
+    //   // "--check-untyped-defs",
+    //   // "--strict",
+    //   // "--disallow-any-unimported",
+    //   // "--disallow-any-expr",
+    //   // "--disallow-any-decorated",
+    //   // "--disallow-any-explicit",
+    //   // "--warn-unreachable",
+    //   // "--warn-incomplete-stub",
+    // ],
+    // "python.linting.mypyCategorySeverity.error": "Information",
+    // "python.linting.flake8Enabled": false,
+    // "python.linting.flake8Args": [
+    //   "--max-line-length=1000",
+    //   "--max-complexity=10",
+    //   "--ignore=E402",
+    //   "--jobs=7"
+    // ],
+    // "python.linting.banditEnabled": false,
+    // "python.linting.maxNumberOfProblems": 1000,
+    // "python.linting.prospectorEnabled": false,
+    // "python.linting.pycodestyleEnabled": false,
+    // "python.linting.pydocstyleEnabled": false,
+    // "python.linting.pylamaEnabled": false,
+    // "python.linting.pydocstyleArgs": [
+    //   "--ignore=D400,D415,D102,D101,D100,D107,D103,D200,D212,D413"
+    // ],
+    // "python.linting.pycodestyleArgs": ["--ignore=E501,E402"],
+    // "python.linting.pylamaArgs": ["--ignore=E501,E402"],
+    // // python autocomplete
+    // "python.formatting.provider": "none",
+    // "python.formatting.autopep8Args": [
+    //   "--aggressive",
+    //   "--ignore=E402",
+    //   "--max-line-length=100"
+    // ],
+    // // MSのは日本語非対応な気がする
+    // "autopep8.args": ["--aggressive", "--ignore=E402", "--max-line-length=200"],
+    // "autopep8.interpreter": ["python"],
+    // jupyter-notebook
+    "notebook.cellToolbarLocation": {
+      "default": "right",
+      "jupyter-notebook": "left"
+    },
+    "workbench.editorAssociations": {
+      "*.ipynb": "jupyter-notebook",
+      "git-rebase-todo": "default"
+    },
+    "files.exclude": {
+      "**/__pycache__": true,
+      "**/.git": false,
+      "**/.ipynb_checkpoints": true,
+      "**/.mypy_cache": true
+    },
+    "cSpell.language": "en,ja,python",
+    "cSpell.diagnosticLevel": "Warning",
+    "editor.inlineSuggest.enabled": true,
+    "github.copilot.editor.enableAutoCompletions": true,
+    "editor.minimap.showSlider": "always",
+    "editor.mouseWheelZoom": true,
+    "editor.wordWrap": "on",
+    "notebook.formatOnSave.enabled": true,
+    "notebook.output.textLineLimit": 100,
+    "notebook.output.wordWrap": true,
+   }
