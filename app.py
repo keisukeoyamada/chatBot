@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 import google.generativeai as genai
-
+from langchain_google_genai import ChatGoogleGenerativeAI
 # import PIL.Image
 # import PyPDF2
 import os
@@ -21,23 +21,28 @@ def index():
 
 load_dotenv()
 
-genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
-
+# genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
+os.environ["GOOGLE_API_KEY"]
 
 @app.route("/chat", methods=["POST"])
 def chat():
     user_input = request.json.get("input")
-    model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+    # model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+    model = ChatGoogleGenerativeAI(model="gemini-1.5-flash")
 
     # script_dir = Path(__file__).parent
     # user_profile = os.environ.get('USERPROFILE')
     # input = input(f"""こんにちは、{user_profile}さんご用件をお聞かせください
     #   """)
-    response = model.generate_content(user_input)
-    bot_response = response.get("text", "") if isinstance(response, dict) else response.text
+    # response = model.generate_content(user_input)
+    response = model.invoke(user_input)
+    # bot_response = response.get("text", "") if isinstance(response, dict) else response.text
+    bot_response = response.content
+
     save_conversation_log(user_input, bot_response)
     # print(response.text)
-    return jsonify({"response": response.text})
+    # return jsonify({"response": response.text})
+    return jsonify({"response": bot_response})
 
 
 def save_conversation_log(user_input, response, filename=CONVERSATION_LOG_FILE):
