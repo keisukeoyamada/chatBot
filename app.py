@@ -25,7 +25,7 @@ os.environ["GOOGLE_API_KEY"]
 def chat():
     user_input = request.json.get("input")
     # model = genai.GenerativeModel(model_name="gemini-1.5-flash")
-    model = ChatGoogleGenerativeAI(model="gemini-1.5-flash")
+    model = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
 
     # response = model.generate_content(user_input)
     response = model.invoke(user_input)
@@ -60,4 +60,4 @@ def load_conversation_log(filename=CONVERSATION_LOG_FILE):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=False)
