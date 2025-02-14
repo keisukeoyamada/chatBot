@@ -25,29 +25,14 @@ os.environ["GOOGLE_API_KEY"]
 def chat():
     data = request.json
     user_input = data.get("input")
-    # model_name = data.get("model", "gemini-2.0-flash")
-    # temperature = data.get("temperature", 0.5)
     model_name = data.get("model")
     temperature = data.get("temperature")
-    # model = genai.GenerativeModel(model_name="gemini-1.5-flash")
-    if model_name is None or temperature is None:
-        return jsonify({"error": "model と temperature を指定してください"}), 400
     model = ChatGoogleGenerativeAI(model=model_name, temperature=temperature)
-
-
-    # response = model.generate_content(user_input)
     response = model.invoke(user_input)
-    # bot_response = response.get("text", "") if isinstance(response, dict) else response.text
     bot_response = response.content
 
     save_conversation_log(user_input, bot_response)
-    # print(response.text)
-    # return jsonify({"response": response.text})
-    return jsonify({
-        "response": bot_response,
-        "model": model_name,
-        "temperature": temperature
-    })
+    return jsonify({"response": bot_response, "model": model_name, "temperature": temperature})
 
 
 def save_conversation_log(user_input, response, filename=CONVERSATION_LOG_FILE):
@@ -61,7 +46,6 @@ def save_conversation_log(user_input, response, filename=CONVERSATION_LOG_FILE):
 
 
 def load_conversation_log(filename=CONVERSATION_LOG_FILE):
-    # 会話ログを読み込む
     conversations = []
     try:
         with open(filename, "r", encoding="utf-8") as file:
