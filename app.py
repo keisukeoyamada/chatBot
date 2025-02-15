@@ -1,13 +1,9 @@
 from flask import Flask, request, jsonify, render_template
 import google.generativeai as genai
-
-# import PIL.Image
-# import PyPDF2
+from langchain_google_genai import ChatGoogleGenerativeAI
 import os
 import json
 from dotenv import load_dotenv
-
-# from pathlib import Path
 
 app = Flask(__name__)
 CONVERSATION_LOG_FILE = "conversation_log.json"
@@ -21,27 +17,25 @@ def index():
 
 load_dotenv()
 
-genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
+# genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
+os.environ["GOOGLE_API_KEY"]
 
 
 @app.route("/chat", methods=["POST"])
 def chat():
-    user_input = request.json.get("input")
-    model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+    data = request.json
+    user_input = data.get("input")
+    model_name = data.get("model")
+    temperature = data.get("temperature")
+    model = ChatGoogleGenerativeAI(model=model_name, temperature=temperature)
+    response = model.invoke(user_input)
+    bot_response = response.content
 
-    # script_dir = Path(__file__).parent
-    # user_profile = os.environ.get('USERPROFILE')
-    # input = input(f"""こんにちは、{user_profile}さんご用件をお聞かせください
-    #   """)
-    response = model.generate_content(user_input)
-    bot_response = response.get("text", "") if isinstance(response, dict) else response.text
     save_conversation_log(user_input, bot_response)
-    # print(response.text)
-    return jsonify({"response": response.text})
+    return jsonify({"response": bot_response, "model": model_name, "temperature": temperature})
 
 
 def save_conversation_log(user_input, response, filename=CONVERSATION_LOG_FILE):
-    # 会話内容をJSON形式で保存
     conversation = {"user_input": user_input, "bot_response": response}
     try:
         with open(filename, "a", encoding="utf-8") as file:
@@ -51,12 +45,7 @@ def save_conversation_log(user_input, response, filename=CONVERSATION_LOG_FILE):
         print(f"ファイルの書き込み中にエラーが発生しました: {e}")
 
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
-
-
 def load_conversation_log(filename=CONVERSATION_LOG_FILE):
-    # 会話ログを読み込む
     conversations = []
     try:
         with open(filename, "r", encoding="utf-8") as file:
