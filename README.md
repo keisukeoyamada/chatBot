@@ -23,3 +23,6 @@
     docker ps
 ## コンテナの停止
     docker stop 7b48564dc191
+
+# dockerログ確認（エラーでコンテナ落ちた時など原因確認）
+docker logs $(docker ps -q -l)
