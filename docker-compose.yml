@@ -8,3 +8,4 @@ services:
       - FLASK_ENV=development
     volumes:
       - .:/app
+    restart: unless-stopped
