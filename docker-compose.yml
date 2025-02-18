@@ -1,11 +1,31 @@
-version: '3'
+version: '3.8'
+
 services:
-  web:
-    build: .
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
-      - "49500:5000"  # コンテナ内の 5000 番をホストの 49500 番にマッピング
+      - "8080:8080"
+    volumes:
+      - ./frontend/:/app/
+      - /app/node_modules
+    environment:
+      - VUE_APP_BACKEND_URL=http://backend:5000
+      - NODE_ENV=development
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend/app:/app
     environment:
       - FLASK_ENV=development
-    volumes:
-      - .:/app
-    restart: unless-stopped
+
+networks:
+  default:
+    driver: bridge

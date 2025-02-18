@@ -1,0 +1,35 @@
+コンテナの停止と削除
+コンテナを再起動する前に、実行中のコンテナを停止して削除します
+ 
+ 1126  docker ps
+  1135  docker stop 7b48564dc191
+ 1127  docker rm  docker_app-web-1
+
+ イメージの再ビルド
+HTMLファイルを含むソースコードを編集した場合、Dockerイメージを再ビルドする必要があります。 Dockerfileがあるディレクトリで以下のコマンドを実行してください
+
+
+ 1128  docker build -t app-web-2 .
+ 1129  docker ps
+
+ 新しいコンテナを起動
+ビルドが完了したら、新しいコンテナを起動します。
+
+ 1130  docker run -d -p 49500:5000 app-web-2
+ 1131  docker ps
+
+ 1135  docker stop 7b48564dc191
+
+ ボリュームマウントの活用
+開発中で頻繁にHTMLファイルを変更する場合、Dockerコンテナにボリュームマウントを設定することで、コンテナを再起動せずに変更を反映できます。Docker実行時に-vオプションを使ってホストのディレクトリをコンテナにマウントします。
+
+bash
+コードをコピーする
+docker run -d -p <ホストのポート>:<コンテナのポート> -v $(pwd)/path/to/html:/path/in/container <イメージ名>
+これにより、ホストのHTMLファイルを保存するたびにコンテナ内のファイルも更新されます。
+
+Dockerコンテナの中に入るには、以下のコマンドを使います：
+
+docker exec -it c9514604aaa4 /bin/bash 
+
+http://localhost:49500/にアクセス
