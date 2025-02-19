@@ -9,6 +9,7 @@ from flask_cors import CORS
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 app = Flask(__name__)
+# CORS(app)  # 追加
 CORS(app, resources={r"/chat": {"origins": ["http://localhost:8080", "https://localhost:8080"], "methods": ["POST", "OPTIONS"]}})
 
 logging.basicConfig(level=logging.DEBUG)
