@@ -19,7 +19,7 @@ const fetchChatResponse = async () => {
 
   loading.value = true;
   try {
-    const response = await fetch("/chat", {
+    const response = await fetch("http://localhost:5000/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -72,7 +72,10 @@ onMounted(async () => {
 <template>
   <div>
     <h1>Chatbot <span id="smallfont">powered by GeminiAI</span></h1>
-    <div>keisuke.Oが練習用に作成したアプリケーションです（vue+TypeScript ver）。Dockerで起動成功</div>
+    <div>
+      keisuke.Oが練習用に作成したアプリケーションです（vue+TypeScript
+      ver）。Dockerで起動成功
+    </div>
 
     <label for="model-select">モデルを選択：</label>
     <select id="model-select" v-model="model">
