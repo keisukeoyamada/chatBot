@@ -34,7 +34,9 @@ const fetchChatResponse = async () => {
     }
 
     const data = await response.json();
-    botResponse.value = marked.parse(data.response);
+    console.log("Response from backend:", data);
+    //botResponse.value = marked.parse(data.response);
+    botResponse.value = data.response
 
     // 新しい会話を追加
     conversations.value.unshift({
@@ -109,7 +111,7 @@ onMounted(async () => {
 
     <div v-if="loading" id="loading-icon">読み込み中...</div>
 
-    <div id="response" v-html="botResponse"></div>
+    <div v-html="botResponse"></div>
 
     <h2>会話ログ</h2>
     <div v-for="(conversation, index) in conversations" :key="index">
