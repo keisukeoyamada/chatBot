@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 import logging
 
 app = Flask(__name__)
+# CORS(app)  # 追加
 CORS(app, resources={r"/chat": {"origins": ["http://localhost:8080", "https://localhost:8080"], "methods": ["POST", "OPTIONS"]}})
 
 logging.basicConfig(level=logging.DEBUG)
