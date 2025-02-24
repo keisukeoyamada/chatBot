@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import marked from "marked";
+import { marked } from "marked";
 
 interface Conversation {
   user_input: string;
@@ -36,7 +36,7 @@ const fetchChatResponse = async () => {
     const data = await response.json();
     console.log("Response from backend:", data);
     //botResponse.value = marked.parse(data.response);
-    botResponse.value = data.response;
+    botResponse.value = marked(data.response);
 
     // 新しい会話を追加
     conversations.value.unshift({
