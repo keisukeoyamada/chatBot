@@ -36,7 +36,7 @@ const fetchChatResponse = async () => {
     const data = await response.json();
     console.log("Response from backend:", data);
     //botResponse.value = marked.parse(data.response);
-    botResponse.value = data.response
+    botResponse.value = data.response;
 
     // 新しい会話を追加
     conversations.value.unshift({
