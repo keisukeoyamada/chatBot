@@ -48,3 +48,7 @@ docker-compose up backend
 # docker ログ確認（エラーでコンテナ落ちた時など原因確認）
 
 docker logs $(docker ps -q -l)
+
+
+#Docker composeでbackendコンテナんだけ起動する方法
+```docker-compose up -d backend```
