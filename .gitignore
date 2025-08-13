@@ -1,3 +1,4 @@
 conversation_log.json
 .env
-.log
+/*.log
+/*.txt
