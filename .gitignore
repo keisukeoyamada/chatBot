@@ -1,3 +1,4 @@
 backend/app/conversation_log.json
 backend/.env
 frontend/node_modules
+*.log
