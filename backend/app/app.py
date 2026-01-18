@@ -1,11 +1,12 @@
-from flask import Flask, request, jsonify, render_template
-from flask_cors import CORS
-import google.generativeai as genai
-from langchain_google_genai import ChatGoogleGenerativeAI
-import os
 import json
-from dotenv import load_dotenv
 import logging
+import os
+
+import google.generativeai as genai
+from dotenv import load_dotenv
+from flask import Flask, jsonify, render_template, request
+from flask_cors import CORS
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 app = Flask(__name__)
 # CORS(app)  # 追加
@@ -15,15 +16,21 @@ logging.basicConfig(level=logging.DEBUG)
 
 CONVERSATION_LOG_FILE = "conversation_log.json"
 
+
 @app.route("/")
 def index():
     conversations = load_conversation_log()
     return render_template("bot.html", conversations=conversations)
 
+
 load_dotenv()
 
 # genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
-os.environ["GOOGLE_API_KEY"]
+os.environ.get("GOOGLE_API_KEY")
+check_api_key = os.environ.get("GOOGLE_API_KEY")
+if not check_api_key or check_api_key == "xxx":
+    logger.warning("\n" + "!" * 50 + "\nGOOGLE_API_KEY が未設定です。" "\nこのままではチャット機能は動作しません。" "\n.envファイルに有効なキーを設定してください。" "\n" + "!" * 50)
+
 
 @app.route("/chat", methods=["POST"])
 def chat():
@@ -52,6 +59,7 @@ def chat():
         logging.error(f"Error in chat(): {e}")
         return jsonify({"error": "Internal server error"}), 500
 
+
 def save_conversation_log(user_input, response, filename=CONVERSATION_LOG_FILE):
     conversation = {"user_input": user_input, "bot_response": response}
     try:
@@ -61,6 +69,7 @@ def save_conversation_log(user_input, response, filename=CONVERSATION_LOG_FILE):
     except IOError as e:
         logging.error(f"ファイルの書き込み中にエラーが発生しました: {e}")
 
+
 def load_conversation_log(filename=CONVERSATION_LOG_FILE):
     conversations = []
     try:
@@ -69,6 +78,7 @@ def load_conversation_log(filename=CONVERSATION_LOG_FILE):
     except (IOError, json.JSONDecodeError) as e:
         logging.error(f"会話ログの読み込み中にエラーが発生しました: {e}")
     return conversations
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
