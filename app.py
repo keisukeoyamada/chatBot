@@ -2,8 +2,12 @@ from flask import Flask, request, jsonify, render_template
 import google.generativeai as genai
 from langchain_google_genai import ChatGoogleGenerativeAI
 import os
+import logging
 import json
 from dotenv import load_dotenv
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 CONVERSATION_LOG_FILE = "conversation_log.json"
@@ -18,8 +22,14 @@ def index():
 load_dotenv()
 
 # genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
-os.environ["GOOGLE_API_KEY"]
-
+os.environ.get("GOOGLE_API_KEY")
+check_api_key = os.environ.get("GOOGLE_API_KEY")
+if not check_api_key or check_api_key == "xxx":
+    logger.warning("\n" + "!"*50 +
+                   "\nGOOGLE_API_KEY が未設定です。"
+                   "\nこのままではチャット機能は動作しません。"
+                   "\n.envファイルに有効なキーを設定してください。"
+                   "\n" + "!"*50)
 
 @app.route("/chat", methods=["POST"])
 def chat():
