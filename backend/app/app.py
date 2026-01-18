@@ -26,7 +26,11 @@ def index():
 load_dotenv()
 
 # genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
-os.environ["GOOGLE_API_KEY"]
+os.environ.get("GOOGLE_API_KEY")
+check_api_key = os.environ.get("GOOGLE_API_KEY")
+if not check_api_key or check_api_key == "xxx":
+    logger.warning("\n" + "!" * 50 + "\nGOOGLE_API_KEY が未設定です。" "\nこのままではチャット機能は動作しません。" "\n.envファイルに有効なキーを設定してください。" "\n" + "!" * 50)
+
 
 
 @app.route("/chat", methods=["POST"])
