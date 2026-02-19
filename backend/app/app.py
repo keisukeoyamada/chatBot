@@ -23,6 +23,9 @@ def index():
     return render_template("bot.html", conversations=conversations)
 
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 load_dotenv()
 
 # genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
