@@ -8,7 +8,7 @@ interface Conversation {
 }
 
 const userInput = ref<string>("");
-const model = ref<string>("gemini-2.0-flash");
+const model = ref<string>("gemini-3-flash-preview");
 const temperature = ref<number>(0.5);
 const conversations = ref<Conversation[]>([]);
 const botResponse = ref<string>("");
@@ -19,7 +19,7 @@ const fetchChatResponse = async () => {
 
   loading.value = true;
   try {
-    const response = await fetch("http://localhost:5050/chat", {
+    const response = await fetch(`http://${window.location.hostname}:5050/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -81,9 +81,9 @@ onMounted(async () => {
 
     <label for="model-select">モデルを選択：</label>
     <select id="model-select" v-model="model">
-      <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
       <option value="gemini-3-flash-preview">gemini-3-flash-preview</option>
       <option value="gemini-2.0-pro">Gemini 2.0 Pro</option>
+      <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
     </select>
 
     <label for="temperature-slider">temperature（創造性）:</label>

@@ -2,7 +2,6 @@ import json
 import logging
 import os
 
-import google.generativeai as genai
 from dotenv import load_dotenv
 from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
@@ -10,7 +9,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 
 app = Flask(__name__)
 # CORS(app)  # 追加
-CORS(app, resources={r"/chat": {"origins": ["http://localhost:8080", "https://localhost:8080"], "methods": ["POST", "OPTIONS"]}})
+CORS(app, resources={r"/chat": {"origins": ["*"], "methods": ["POST", "OPTIONS"]}})
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -33,7 +32,6 @@ os.environ.get("GOOGLE_API_KEY")
 check_api_key = os.environ.get("GOOGLE_API_KEY")
 if not check_api_key or check_api_key == "xxx":
     logger.warning("\n" + "!" * 50 + "\nGOOGLE_API_KEY が未設定です。" "\nこのままではチャット機能は動作しません。" "\n.envファイルに有効なキーを設定してください。" "\n" + "!" * 50)
-
 
 
 @app.route("/chat", methods=["POST"])
