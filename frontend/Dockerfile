@@ -1,4 +1,4 @@
-FROM node:16.16
+FROM node:18-slim
 
 RUN apt-get update -qq
 RUN npm install -g @vue/cli
