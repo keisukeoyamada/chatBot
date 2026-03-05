@@ -1,5 +1,6 @@
 backend/app/conversation_log.json
 backend/app/.env
+backend/*.log
 frontend/node_modules
 frontend/package-lock.json
 *.log
